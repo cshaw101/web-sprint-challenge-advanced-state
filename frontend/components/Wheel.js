@@ -18,3 +18,8 @@ export default function Wheel(props) {
     </div>
   )
 }
+
+//i could add a click handler to the buttons and add a dispatch to change the active class and the B
+//when it goes clockwise switches to the next one after 6 it goes to 1
+//when it goes counter clockwise it needs to go from 6 to 5
+

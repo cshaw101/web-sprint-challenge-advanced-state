@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { MOVE_CLOCKWISE, MOVE_COUNTERCLOCKWISE } from './action-types';
 
 const initialWheelState = {
-  activeCogIndex: 0, // Initial active cog index
+  activeCogIndex: 0, 
 };
 
 function wheel(state = initialWheelState, action) {

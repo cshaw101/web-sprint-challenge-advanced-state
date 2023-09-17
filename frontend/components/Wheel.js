@@ -16,7 +16,7 @@ function Wheel({ activeCogIndex, dispatch }) {
       <div id="wheel">
         {Array(6)
           .fill('')
-          .map((_, index) => (
+          .map((_, index) => (     //the _ is used like a placeholder becuase index is all that my map is looking for 
             <div
               key={index}
               className={`cog ${index === activeCogIndex ? 'active' : ''}`}

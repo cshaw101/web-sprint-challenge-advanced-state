@@ -1,6 +1,7 @@
+
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchQuiz } from '../state/action-creators';
+import { fetchQuiz, selectAnswer } from '../state/action-creators';
 
 export default function Quiz() {
   const dispatch = useDispatch();
@@ -11,6 +12,10 @@ export default function Quiz() {
     dispatch(fetchQuiz());
   }, [dispatch]);
 
+  const handleAnswerClick = (answerId) => {
+    dispatch(selectAnswer(answerId));
+  };
+
   return (
     <div id="wrapper">
       {questions ? (
@@ -18,10 +23,14 @@ export default function Quiz() {
           <h2>{questions.question}</h2>
           <div id="quizAnswers">
             {questions.answers && questions.answers.map((answer) => (
-              <div className={`answer ${answer.isSelected ? 'selected' : ''}`} key={answer.answer_id}>
+              <div
+                className={`answer ${answer.answer_id === selectedAnswer ? 'selected' : ''}`}
+                key={answer.answer_id}
+                onClick={() => handleAnswerClick(answer.answer_id)}
+              >
                 {answer.text}
                 <button>
-                  {answer.isSelected ? 'SELECTED' : 'Select'}
+                  {answer.answer_id === selectedAnswer ? 'SELECTED' : 'Select'}
                 </button>
               </div>
             ))}
@@ -36,17 +45,3 @@ export default function Quiz() {
     </div>
   );
 }
-
-
-// recieving the questions and answers from `[GET] http://localhost:9000/api/quiz/next`
-
-// `[POST] http://localhost:9000/api/quiz/new`
-// - Expects a payload with the following properties: `question_text`, `true_answer_text`, `false_answer_text`
-// - Example of payload: `{ "question_text": "Love JS?", "true_answer_text": "yes", "false_answer_text": "nah" }`
-// - The response to a proper request includes `201 Created` and the newly created quiz object
-// - A malformed client payload will result in a `422 Unprocessable Entity` response with a reason
-
-// - `[POST] http://localhost:9000/api/quiz/answer`
-//   - Expects a payload with the following properties: `quiz_id`, `answer_id`
-//   - Example of payload: `{ "quiz_id": "LVqUh", "answer_id": "0VEv0" }`
-//   - A response to a proper request includes `200 OK` and feedback on the answer

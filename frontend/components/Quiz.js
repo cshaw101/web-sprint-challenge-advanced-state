@@ -5,6 +5,7 @@ import { fetchQuiz } from '../state/action-creators';
 export default function Quiz() {
   const dispatch = useDispatch();
   const questions = useSelector((state) => state.quiz);
+  const selectedAnswer = useSelector((state) => state.selectedAnswer);
 
   useEffect(() => {
     dispatch(fetchQuiz());
@@ -17,15 +18,17 @@ export default function Quiz() {
           <h2>{questions.question}</h2>
           <div id="quizAnswers">
             {questions.answers && questions.answers.map((answer) => (
-              <div className="answer" key={answer.answer_id}>
+              <div className={`answer ${answer.isSelected ? 'selected' : ''}`} key={answer.answer_id}>
                 {answer.text}
-                <button >
-                  SELECTED
+                <button>
+                  {answer.isSelected ? 'SELECTED' : 'Select'}
                 </button>
               </div>
             ))}
           </div>
-          <button id="submitAnswerBtn">Submit answer</button>
+          <button id="submitAnswerBtn" disabled={!selectedAnswer}>
+            Submit answer
+          </button>
         </>
       ) : (
         'Loading next quiz...'

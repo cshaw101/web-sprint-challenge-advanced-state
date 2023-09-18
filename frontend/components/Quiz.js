@@ -1,37 +1,40 @@
-import React from 'react'
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchQuiz } from '../state/action-creators';
 
-export default function Quiz(props) {
+export default function Quiz() {
+  const dispatch = useDispatch();
+  const questions = useSelector((state) => state.quiz);
+
+  useEffect(() => {
+    dispatch(fetchQuiz());
+  }, [dispatch]);
+
   return (
     <div id="wrapper">
-      {
-        // quiz already in state? Let's use that, otherwise render "Loading next quiz..."
-        true ? (
-          <>
-            <h2>What is a closure?</h2>
-
-            <div id="quizAnswers">
-              <div className="answer selected">
-                A function
-                <button>
+      {questions ? (
+        <>
+          <h2>{questions.question}</h2>
+          <div id="quizAnswers">
+            {questions.answers && questions.answers.map((answer) => (
+              <div className="answer" key={answer.answer_id}>
+                {answer.text}
+                <button >
                   SELECTED
                 </button>
               </div>
-
-              <div className="answer">
-                An elephant
-                <button>
-                  Select
-                </button>
-              </div>
-            </div>
-
-            <button id="submitAnswerBtn">Submit answer</button>
-          </>
-        ) : 'Loading next quiz...'
-      }
+            ))}
+          </div>
+          <button id="submitAnswerBtn">Submit answer</button>
+        </>
+      ) : (
+        'Loading next quiz...'
+      )}
     </div>
-  )
+  );
 }
+
+
 // recieving the questions and answers from `[GET] http://localhost:9000/api/quiz/next`
 
 // `[POST] http://localhost:9000/api/quiz/new`

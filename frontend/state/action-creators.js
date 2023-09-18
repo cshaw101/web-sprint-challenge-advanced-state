@@ -1,4 +1,5 @@
-import { MOVE_CLOCKWISE, MOVE_COUNTERCLOCKWISE } from './action-types';
+import axios from 'axios';
+import { MOVE_CLOCKWISE, MOVE_COUNTERCLOCKWISE, SET_QUIZ_INTO_STATE, SET_SELECTED_ANSWER } from './action-types';
 
 export function moveClockwise() {
   return { type: MOVE_CLOCKWISE };
@@ -8,7 +9,9 @@ export function moveCounterClockwise() {
   return { type: MOVE_COUNTERCLOCKWISE };
 }
 
-export function selectAnswer() { }
+export function selectAnswer() { 
+ 
+}
 
 export function setMessage() { }
 
@@ -21,6 +24,15 @@ export function resetForm() { }
 // ❗ Async action creators
 export function fetchQuiz() {
   return function (dispatch) {
+    dispatch({type: SET_QUIZ_INTO_STATE, payload: null})
+     axios
+      .get('http://localhost:9000/api/quiz/next')
+      .then((res) => {
+        dispatch({type: SET_QUIZ_INTO_STATE, payload: res.data})
+      })
+      .catch((error) => {
+        console.error('Error fetching quiz:', error);
+      });
     // First, dispatch an action to reset the quiz state (so the "Loading next quiz..." message can display)
     // On successful GET:
     // - Dispatch an action to send the obtained quiz to its state
@@ -28,6 +40,7 @@ export function fetchQuiz() {
 }
 export function postAnswer() {
   return function (dispatch) {
+    dispatch()
     // On successful POST:
     // - Dispatch an action to reset the selected answer state
     // - Dispatch an action to set the server message to state

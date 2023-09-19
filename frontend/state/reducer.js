@@ -67,7 +67,6 @@ function selectedAnswer(state = initialSelectedAnswerState, action) {
 
 
 const initialMessageState = null;
-
 function infoMessage(state = initialMessageState, action) {
   switch (action.type) {
     case SET_INFO_MESSAGE:
@@ -77,7 +76,6 @@ function infoMessage(state = initialMessageState, action) {
       return state;
   }
 }
-
 
 
 

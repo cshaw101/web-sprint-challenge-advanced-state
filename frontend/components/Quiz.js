@@ -21,6 +21,8 @@ export default function Quiz() {
   const handleAnswerSubmit = () => {
     if (selectedAnswer) {
       dispatch(postAnswer(questions.quiz_id, selectedAnswer));
+      // Set the selected answer as the message
+      dispatch(setMessage(`Your answer: ${selectedAnswer}`));
     } else {
       dispatch(setMessage('Please select an answer before submitting.'));
     }

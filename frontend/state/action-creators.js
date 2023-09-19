@@ -17,6 +17,7 @@ export function setMessage(message) {
   return { type: SET_INFO_MESSAGE, payload: message };
 }
 
+
 export function setQuiz(quizData) {
   return { type: SET_QUIZ_INTO_STATE, payload: quizData };
 }
@@ -45,19 +46,19 @@ export function fetchQuiz() {
   }
 }
 
+
 export function postAnswer(quizId, answerId) {
   return function (dispatch) {
-    // Send a POST request to submit the answer with quizId and answerId
     axios
       .post('http://localhost:9000/api/quiz/answer', { quiz_id: quizId, answer_id: answerId })
       .then((response) => {
         if (response.status === 200) {
           dispatch(selectAnswer(null)); 
-          dispatch(fetchQuiz());
+          dispatch(setMessage(response.data.message)); 
+          dispatch(fetchQuiz()); 
         } else {
-          
           console.error('Error submitting answer:', response.statusText);
-     
+          
         }
       })
       .catch((error) => {
@@ -66,6 +67,7 @@ export function postAnswer(quizId, answerId) {
       });
   };
 }
+
 
 export function postQuiz() {
   return function (dispatch) {

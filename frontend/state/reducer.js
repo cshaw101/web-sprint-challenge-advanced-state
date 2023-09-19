@@ -69,18 +69,18 @@ function infoMessage(state = initialMessageState, action) {
   }
 }
 
-
 const initialFormState = {
   newQuestion: '',
   newTrueAnswer: '',
   newFalseAnswer: '',
-}
+};
+
 function form(state = initialFormState, action) {
   switch (action.type) {
     case INPUT_CHANGE:
       return {
         ...state,
-        ...action.payload,
+        [action.payload.fieldName]: action.payload.fieldValue,
       };
 
     case RESET_FORM:
@@ -90,5 +90,4 @@ function form(state = initialFormState, action) {
       return state;
   }
 }
-
 export default combineReducers({ wheel, quiz, selectedAnswer, infoMessage, form })

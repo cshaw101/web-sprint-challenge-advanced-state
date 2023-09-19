@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import * as actionCreators from '../state/action-creators';
 
 export function Form(props) {
-  const { form, infoMessage, inputChange, postQuiz } = props;
+  const { form, inputChange, postQuiz } = props;
 
   const isFormValid = () => {
     return (
@@ -27,7 +27,6 @@ export function Form(props) {
 
   return (
     <form id="form" onSubmit={onSubmit}>
-      {infoMessage && <div className="success-message">{infoMessage}</div>}
       <h2>Create New Quiz</h2>
       <input
         maxLength={50}

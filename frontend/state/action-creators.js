@@ -50,30 +50,49 @@ export function fetchQuiz() {
 export function postAnswer(quizId, answerId) {
   return function (dispatch) {
     axios
-      .post('http://localhost:9000/api/quiz/answer', { quiz_id: quizId, answer_id: answerId })
+      .post('http://localhost:9000/api/quiz/answer', {
+        quiz_id: quizId,
+        answer_id: answerId,
+      })
       .then((response) => {
         if (response.status === 200) {
-          dispatch(selectAnswer(null)); 
-          dispatch(setMessage(response.data.message)); 
-          dispatch(fetchQuiz()); 
+          dispatch(selectAnswer(null));
+          dispatch(setMessage(response.data.message));
+          dispatch(fetchQuiz());
         } else {
           console.error('Error submitting answer:', response.statusText);
-          
         }
       })
       .catch((error) => {
         console.error('Error submitting answer:', error);
-        
       });
   };
 }
 
 
-export function postQuiz() {
+
+export function postQuiz(quizData) {
   return function (dispatch) {
-    // On successful POST:
-    // - Dispatch the correct message to the appropriate state
-    // - Dispatch the resetting of the form
-  }
+    axios
+      .post('http://localhost:9000/api/quiz/new', {
+        question_text: quizData.newQuestion,
+        true_answer_text: quizData.newTrueAnswer,
+        false_answer_text: quizData.newFalseAnswer,
+      })
+      .then((response) => {
+        if (response.status === 201) {
+          dispatch(setMessage('Quiz added successfully'));
+          dispatch(resetForm());
+          dispatch(setQuiz(response.data));
+        } else {
+          console.error('Error posting quiz:', response.statusText);
+        }
+      })
+      .catch((error) => {
+        console.error('Error posting quiz:', error);
+      });
+  };
 }
+
+
 // ❗ On promise rejections, use log statements or breakpoints, and put an appropriate error message in state

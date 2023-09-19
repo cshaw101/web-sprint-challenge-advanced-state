@@ -81,7 +81,7 @@ export function postQuiz(quizData) {
       })
       .then((response) => {
         if (response.status === 201) {
-          dispatch(setMessage('Quiz added successfully'));
+          dispatch(setMessage(`Congrats: ${quizData.newQuestion} is a great question!`));
           dispatch(resetForm());
           dispatch(setQuiz(response.data));
         } else {

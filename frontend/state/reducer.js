@@ -58,14 +58,6 @@ function selectedAnswer(state = initialSelectedAnswerState, action) {
   }
 }
 
-
-
-
-
-
-
-
-
 const initialMessageState = null;
 function infoMessage(state = initialMessageState, action) {
   switch (action.type) {
@@ -76,11 +68,6 @@ function infoMessage(state = initialMessageState, action) {
       return state;
   }
 }
-
-
-
-
-
 
 
 const initialFormState = {
